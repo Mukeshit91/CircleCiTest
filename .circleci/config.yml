@@ -1,0 +1,57 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  test:
+    docker:
+      # specify the version you desire here
+       - image: circleci/ruby:2.3-node-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # run tests!
+      - run:
+          name: run tests
+          command: bundle exec cucumber --format html --out reports.html features/workflow_3.feature --format progress
+
+      # collect reports
+      - store_test_results:
+          path: reports.html
+      - store_artifacts:
+          path: reports.html
+          destination: reports.html
+
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - test
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "30 8,20 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test

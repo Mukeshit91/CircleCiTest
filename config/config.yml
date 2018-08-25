@@ -1,0 +1,5 @@
+base_url: https://en-gb.facebook.com/
+login_user: traj14
+login_password: 12345
+excel_workbook: ../../support/data.xls
+excel_worksheet: Regression
