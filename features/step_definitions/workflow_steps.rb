@@ -9,9 +9,9 @@ Given(/^user logins and navigates to home page$/) do
   # page.driver.browser.manage.window.maximize
   # Capybara.current_session.driver.browser.manage.window.maximize
   # Capybara.current_session.driver.browser.manage.window.resize_to(1280, 1024)
-  page.fill_in 'username', :with => LOGIN_USER
-  page.fill_in 'password', :with => LOGIN_PASSWORD
-  page.click_button 'Login'
+  page.fill_in 'Email or Phone', :with => LOGIN_USER
+  page.fill_in 'Password', :with => LOGIN_PASSWORD
+  page.click_button 'Log In'
   page.click_link 'Home'
 end
 
