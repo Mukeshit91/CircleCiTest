@@ -8,4 +8,8 @@ Feature: To verify Regression scenarios to test Workflow - 1
     When user clicks on "Home" button
     And user clicks on "Home" link
     And user clicks on "Edit" link
+	And user clicks on "Home" link
+	And user clicks on "Show" link
+	And user clicks on "Ok" link
+	And user clicks on "Done" link
 	
